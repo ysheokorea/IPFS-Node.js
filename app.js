@@ -4,8 +4,9 @@ const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const fs = require('fs');
 
-const ipfs = new ipfsCLient({host : 'localhost', port:'5001', protocol:'http'});
+
 const app = express();
+const ipfs = new ipfsCLient({host : 'localhost', port:'5001', protocol:'http'});
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true}));
@@ -37,7 +38,7 @@ app.post('/upload', (req, res)=>{
 const addFile = async (fileName, filePath) => {
     const file = fs.readFileSync(filePath);
     const fileAdded = await ipfs.add({path : fileName, content : file});
-    console.log( );
+    console.log(fileAdded);
     const fileHash = String(fileAdded.cid)
 
     return fileHash;
